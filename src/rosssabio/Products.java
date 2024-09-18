@@ -1,7 +1,5 @@
 package rosssabio;
 
-import java.util.Scanner;
-
 
     public  class Products {
         public int ptid;
@@ -25,6 +23,10 @@ import java.util.Scanner;
             System.out.printf("|   %-8d | %-5s | %-5.2f |   %-4d | %-9s | %-4d|\n", ptid, n, pr, stc, sts, fn);
             
         }
+
+    void inputGrade() {
+        
+    }
     }
 
 
