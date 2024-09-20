@@ -1,52 +1,45 @@
  package rosssabio;
- 
+
+
 public class Account {
+      
+    int lastId = 0;
+    int id;
+  String firstName;
+  String lastName;
+  String email;
+  String username;
+  String password;
 
-    public int id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String username;
-    public String password;
-
-    public Account(int id, String firstName, String lastName, String email, String username, String password) {
-        this.id = id;
+    public Account(String firstName, String lastName, String email, String username, String password) {
+        this.id = ++lastId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
-        if (isValidPassword(password)) {
-            this.password = password;
-        } else {
-            System.out.println("Password does not meet the required criteria.");
-        }
+        this.password = password;
     }
 
-    public final boolean isValidPassword(String password) {
-    
-        if (password.length() >= 7) {
-        } else {
-            System.out.println("Error: Password must be at least 8 characters long.");
-            return false;
-        }
-        if (!password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*")) {
-            System.out.println("Error: Password must contain at least one uppercase and one lowercase letter.");
-            return false;
-        }
-        if (!password.matches(".*\\d.*")) {
-            System.out.println("Error: Password must contain at least one number.");
-            return false;
-        }
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            System.out.println("Error: Password must contain at least one special character.");
-            return false;
-        }
-        if (password.equalsIgnoreCase("admin") || password.equalsIgnoreCase("password") || password.equals("1234")) {
-            System.out.println("Error: Password must not be a common password like 'admin', 'password', or '1234'.");
-            return false;
-        }
-        return true; 
+    public int getId() {
+        return id;
     }
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String toString() {
+        System.out.println("-----------------------------------------------------------------------------");
+        return "ID: " + id + " | First Name: " + firstName + "| Last Name: " + lastName + 
+               "| Email: " + email + "| Username: " + username;
+    }
 }
       
