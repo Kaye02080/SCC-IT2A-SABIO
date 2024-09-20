@@ -1,88 +1,87 @@
 package rosssabio;
 
-import java.util.Scanner;
+public class Accounts {
+    
+       Account[] accountList;
+        int currentIndex;
+        
 
-public class Acccounts {
-    public static void main(String[] args) {
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.print("Enter ID: ");
-            int id = sc.nextInt();
-            sc.nextLine();
-            
-            System.out.print("Enter First Name: ");
-            String firstName = sc.nextLine();
-            
-            System.out.print("Enter Last Name: ");
-            String lastName = sc.nextLine();
-            
-            System.out.print("Enter Email: ");
-            String email = sc.nextLine();
-            
-            System.out.print("Enter Username: ");
-            String username = sc.nextLine();
-            
-            System.out.print("Enter Password: ");
-            String password = sc.nextLine();
-            
-            
-            Acccounts account = new Acccounts(id, firstName, lastName, email, username, password);
-            
-            
-            if (account.password != null) {
-                System.out.println("\nAccount created successfully!");
-                System.out.println("Account Details:");
-                System.out.println("ID: " + account.id);
-                System.out.println("Name: " + account.firstName + " " + account.lastName);
-                System.out.println("Email: " + account.email);
-                System.out.println("Username: " + account.username);
-            } else {
-                System.out.println("\nAccount creation failed due to invalid password.");
+    public Accounts(int size) {
+        accountList = new Account[size];
+        currentIndex = 0;
+    }
+
+    public boolean addAccount(Account account) {
+        for (int i = 0; i < currentIndex; i++) {
+            if (accountList[i].getEmail().equalsIgnoreCase(account.getEmail()) ||
+                accountList[i].getUsername().equalsIgnoreCase(account.getUsername()) ||
+                accountList[i].getPassword().equalsIgnoreCase(account.getPassword())) {
+                System.out.println("Error: Duplicate email, username, or password not allowed.");
+                return false;
+            }
+        }
+        if (currentIndex < accountList.length) {
+            accountList[currentIndex++] = account;
+            return true;
+        } else {
+            System.out.println("Error: Account list is full.");
+            return false;
+        }
+    }
+
+    public void viewAccounts() {
+        if (currentIndex == 0) {
+            System.out.println("No accounts registered.");
+        } else {
+            for (int i = 0; i < currentIndex; i++) {
+                System.out.println(accountList[i]);
             }
         }
     }
 
-    
-    public int id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String username;
-    public String password;
+    public boolean isPasswordValid(String password) {
+        if (password.length() < 8 {
+            System.out.println("Password must be at least 8 characters long.");
+            return false;
+        }
 
-    public Acccounts(int id, String firstName, String lastName, String email, String username, String password) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        if (isValidPassword(password)) {
-            this.password = password;
-        } else {
-            System.out.println("Password does not meet the required criteria.");
-        }
-    }
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasNumber = false;
+        boolean hasSpecialChar = false;
 
-    public final boolean isValidPassword(String password) {
-        if (password.length() < 7) {
-            System.out.println("Error: Password must be at least 8 characters long.");
+        String specialCharacters = "!@#$%^&*(),.?\":{}|<>";
+        for (char ch : password.toCharArray()) {
+            if (ch >= 'A' && ch <= 'Z') hasUpperCase = true;
+            if (ch >= 'a' && ch <= 'z') hasLowerCase = true;
+            if (ch >= '0' && ch <= '9') hasNumber = true;
+            if (specialCharacters.indexOf(ch) >= 0) hasSpecialChar = true;
+        }
+
+        if (!hasUpperCase) {
+            System.out.println("Password must contain at least one uppercase letter.");
             return false;
         }
-        if (!password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*")) {
-            System.out.println("Error: Password must contain at least one uppercase and one lowercase letter.");
+        if (!hasLowerCase) {
+            System.out.println("Password must contain at least one lowercase letter.");
             return false;
         }
-        if (!password.matches(".*\\d.*")) {
-            System.out.println("Error: Password must contain at least one number.");
+        if (!hasSpecialChar) {
+            System.out.println("Password must contain at least one special character.");
             return false;
         }
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            System.out.println("Error: Password must contain at least one special character.");
+        if (!hasNumber) {
+            System.out.println("Password must contain at least one number.");
             return false;
         }
-        if (password.equalsIgnoreCase("admin") || password.equalsIgnoreCase("password") || password.equals("1234")) {
-            System.out.println("Error: Password must not be a common password like 'admin', 'password', or '1234'.");
+        if (password.toLowerCase().contains("admin") || 
+            password.toLowerCase().contains("password") || 
+            password.contains("1234")) {
+            System.out.println("Password must not contain common words like 'admin', 'password', or '1234'.");
             return false;
         }
         return true;
+   
+
     }
 }
