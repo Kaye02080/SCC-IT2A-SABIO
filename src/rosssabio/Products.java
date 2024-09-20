@@ -1,32 +1,30 @@
 package rosssabio;
 
 
-    public  class Products {
-        public int ptid;
-        public String n;
-        public double pr;
-        public int stc;
-        public String sts;
-        public int fn;        
 
-        public void wGrades(int sid, String name, double p, int m, String s, int f) {
-            ptid = sid;
-            n = name;
-            pr = p;
-            stc = m;
-            sts = s;
-            fn = f;
-            
-        }
+public class products {
+   
+    private int pid;
+    private String pname;
+    private int stocks;
+    private double price;
+    private int sold;
 
-        public void vGrades() {                           
-            System.out.printf("|   %-8d | %-5s | %-5.2f |   %-4d | %-9s | %-4d|\n", ptid, n, pr, stc, sts, fn);
-            
-        }
-
-    void inputGrade() {
-        
-    }
+    public void addProduct(int id, String name, int st, double pr, int sold) {
+        this.pid = id;
+        this.pname = name;
+        this.stocks = st;
+        this.price = pr;
+        this.sold = sold;
     }
 
 
+    public void viewProduct() {
+        double totalExpectedProfit = this.price * (this.stocks - this.sold);
+        double totalProfit = this.sold * this.price;
+        String status = (this.stocks > 0) ? "Available" : "Out-of-stock";
+
+        System.out.printf("%-10d %-20s %-20d %-20.2f %-20d %-20.2f %-20.2f %-20s\n",
+                          this.pid, this.pname, this.stocks, this.price, this.sold, totalExpectedProfit, totalProfit, status);
+    }
+}
